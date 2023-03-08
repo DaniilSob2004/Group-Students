@@ -131,7 +131,6 @@ namespace HW_ClassStudent
             sb.Append($"Birthdate: {birthDate.Day}.{birthDate.Month}.{birthDate.Year}\n");
             sb.Append($"Address: {address}\n");
             sb.Append($"phoneNumber: {phoneNumber}\n");
-            sb.Append($"phoneNumber: {phoneNumber}\n");
 
             sb.Append("Grade class work: ");
             foreach (int grade in gradeCW) sb.Append($"{grade} - ");
