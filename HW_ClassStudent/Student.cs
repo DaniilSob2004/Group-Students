@@ -11,6 +11,7 @@ namespace HW_ClassStudent
 {
     public class Student
     {
+        private int id;
         private string name;
         private string surname;
         private DateTime birthDate;
@@ -21,6 +22,7 @@ namespace HW_ClassStudent
         private List<int> gradeExam;
 
         private static int minYearStud = 14;
+        private static int ID = 0;
         
         public Student() :
             this("", "") { }
@@ -39,6 +41,13 @@ namespace HW_ClassStudent
             gradeCW = new List<int>();
             gradeHW = new List<int>();
             gradeExam = new List<int>();
+
+            id += ++ID;  // id студента
+        }
+
+        public int GetID()
+        {
+            return id;
         }
 
         public string GetName()
@@ -127,6 +136,7 @@ namespace HW_ClassStudent
             StringBuilder sb = new StringBuilder();
 
             sb.Append("---------- Student Info ---------\n");
+            sb.Append($"ID: {id}\n");
             sb.Append($"Name: {name}\nSurname: {surname}\n");
             sb.Append($"Birthdate: {birthDate.Day}.{birthDate.Month}.{birthDate.Year}\n");
             sb.Append($"Address: {address}\n");

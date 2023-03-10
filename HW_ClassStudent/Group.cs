@@ -34,18 +34,21 @@ namespace HW_ClassStudent
         // копия студентов из другого списка в наш список
         private void CopyStudents(List<Student> students)
         {
-            foreach (Student stud in students)
+            if (students != null)
             {
-                this.students.Add(stud);
+                foreach (Student stud in students)
+                {
+                    this.students.Add(stud);
+                }
             }
         }
 
-        // принимает массив string и заполняет его (имя+фамилия) каждого студента
+        // принимает массив string и заполняет его (имя+фамилия+ID) каждого студента
         private void GetStudentNames(string[] arrNames)
         {
             for (int i = 0; i < students.Count; i++)
             {
-                arrNames[i] = students[i].GetName() + " " + students[i].GetSurname();
+                arrNames[i] = students[i].GetName() + " " + students[i].GetSurname() + ", ID(" + students[i].GetID() + ")";
             }
         }
 
@@ -128,6 +131,26 @@ namespace HW_ClassStudent
                 Console.WriteLine($"{i + 1}. {arrNames[i]}");
             }
             Console.WriteLine();
+        }
+
+        public void AddStudent(Student student)
+        {
+            if (student != null)
+            {
+                students.Add(student);
+            }
+        }
+
+        public Student GetStudentByID(int id)
+        {
+            foreach (Student stud in students)
+            {
+                if (stud.GetID() == id)
+                {
+                    return stud;
+                }
+            }
+            return null;
         }
     } 
 }
