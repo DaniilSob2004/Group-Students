@@ -11,6 +11,7 @@ namespace HW_ClassStudent
     public class Group
     {
         public const int GEN_STUDENTS = 5;
+        public const int MIN_GRADE_EXAM = 40;
 
         private List<Student> students = new List<Student>();
         private string title;
@@ -53,17 +54,15 @@ namespace HW_ClassStudent
         }
 
         // удаление студента
-        private void DelStudent(int id)
+        private void DelStudent(Student stud)
         {
-            Student stud = GetStudentByID(id);
-            if (stud == null)
+            if (stud != null)
             {
-                return;
+                students.Remove(stud);
             }
-            students.Remove(stud);
         }
 
-
+        // -----
 
         // конструктор ддл параметров группы
         public Group(string title, string specialization, int numKurs)
@@ -155,12 +154,21 @@ namespace HW_ClassStudent
             {
                 Console.WriteLine(stud);
             }
+            Console.WriteLine();
         }
 
         public void AddStudent(Student student)
         {
             if (student != null)
             {
+                // если студент которого добавляем есть в списке студентов, то не добавляем (узнаём по ID)
+                foreach (Student stud in students)
+                {
+                    if (stud.GetID() == student.GetID())
+                    {
+                        return;
+                    }
+                }
                 students.Add(student);
             }
         }
@@ -183,8 +191,45 @@ namespace HW_ClassStudent
             if (stud != null)
             {
                 newGroup.AddStudent(GetStudentByID(id));
+                DelStudent(stud);
             }
-            DelStudent(id);
+        }
+
+        public void DelStudentsFromExam()
+        {
+            List<Student> delStudents = new List<Student>();
+            foreach (Student stud in students)
+            {
+                // находим студентов которые провалили экзамены и добавляем в список для дальнейшего удаления
+                if (stud.AverageGradeExam() < MIN_GRADE_EXAM)
+                {
+                    delStudents.Add(stud);
+                }
+            }
+            foreach (Student stud in delStudents)
+            {
+                DelStudent(stud);
+            }
+        }
+
+        public void DelBadStudent()
+        {
+            if (students.Count > 0)
+            {
+                Student badStud = students[0];
+                float result = (badStud.AverageGradeCW() + badStud.AverageGradeHW() + badStud.AverageGradeExam()) / 3;
+                float result2 = 0;
+                for (int i = 1; i < students.Count; i++)
+                {
+                    result2 = (students[i].AverageGradeCW() + students[i].AverageGradeHW() + students[i].AverageGradeExam()) / 3;
+                    if (result2 < result)
+                    {
+                        result = result2;
+                        badStud = students[i];
+                    }
+                }
+                DelStudent(badStud);
+            }
         }
     } 
 }

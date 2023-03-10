@@ -131,6 +131,36 @@ namespace HW_ClassStudent
             }
         }
 
+        public float AverageGradeCW()
+        {
+            float result = 0;
+            foreach (int i in gradeCW)
+            {
+                result += i;
+            }
+            return result / gradeCW.Count;
+        }
+
+        public float AverageGradeHW()
+        {
+            float result = 0;
+            foreach (int i in gradeHW)
+            {
+                result += i;
+            }
+            return result / gradeHW.Count;
+        }
+
+        public float AverageGradeExam()
+        {
+            float result = 0;
+            foreach (int i in gradeExam)
+            {
+                result += i;
+            }
+            return result / gradeExam.Count;
+        }
+
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder();
