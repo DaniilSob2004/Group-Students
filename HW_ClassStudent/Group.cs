@@ -117,20 +117,33 @@ namespace HW_ClassStudent
             this.numKurs = (numKurs >= 1 && numKurs <= 10) ? numKurs : 1;
         }
 
-        public void ShowInfo()
+        public void ShowGroupInfo()
+        {
+            Console.WriteLine($"Title group: {title}");
+            Console.WriteLine($"Specialization group: {specialization}");
+            Console.WriteLine($"Kurs number: {numKurs}");
+        }
+
+        public void ShowSortStudents()
         {
             string[] arrNames = new string[students.Count];
             GetStudentNames(arrNames);
             Array.Sort(arrNames);
 
-            Console.WriteLine($"Title group: {title}");
-            Console.WriteLine($"Specialization group: {specialization}");
-            Console.WriteLine($"Kurs number: {numKurs}");
+            ShowGroupInfo();
             for (int i = 0; i < students.Count; i++)
             {
                 Console.WriteLine($"{i + 1}. {arrNames[i]}");
             }
             Console.WriteLine();
+        }
+
+        public void ShowAllStudInfo()
+        {
+            foreach (Student stud in students)
+            {
+                Console.WriteLine(stud);
+            }
         }
 
         public void AddStudent(Student student)
@@ -152,5 +165,8 @@ namespace HW_ClassStudent
             }
             return null;
         }
+
+        
+
     } 
 }
