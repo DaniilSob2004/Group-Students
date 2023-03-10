@@ -22,8 +22,6 @@ namespace CorrectInput
 
         static public bool CheckPhoneNumber(string phoneNumber)
         {
-            // +380688998808
-            // +38-068-899-88-08
             Regex reg = new Regex(@"^(\+?\d{1,3})?[- ]?\d{2,3}[- ]?\d{2,3}[- ]?\d{2,3}[- ]?\d{2,3}$");
             Match result = reg.Match(phoneNumber);
 
