@@ -52,6 +52,17 @@ namespace HW_ClassStudent
             }
         }
 
+        // удаление студента
+        private void DelStudent(int id)
+        {
+            Student stud = GetStudentByID(id);
+            if (stud == null)
+            {
+                return;
+            }
+            students.Remove(stud);
+        }
+
 
 
         // конструктор ддл параметров группы
@@ -166,7 +177,14 @@ namespace HW_ClassStudent
             return null;
         }
 
-        
-
+        public void StudentTransferToAnotherGroup(int id, Group newGroup)
+        {
+            Student stud = GetStudentByID(id);
+            if (stud != null)
+            {
+                newGroup.AddStudent(GetStudentByID(id));
+            }
+            DelStudent(id);
+        }
     } 
 }
