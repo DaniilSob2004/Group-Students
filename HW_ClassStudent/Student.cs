@@ -25,18 +25,17 @@ namespace HW_ClassStudent
         private static int ID = 0;
         
         public Student() :
-            this("", "") { }
+            this("Name", "Surname") { }
 
         public Student(string name, string surname) : 
-            this(name, surname, DateTime.Now, new Address(), "") { }
+            this(name, surname, DateTime.Now, new Address()) { }
 
-        public Student(string name, string surname, DateTime birthDate, Address address, string phoneNumber)
+        public Student(string name, string surname, DateTime birthDate, Address address, string phoneNumber = "empty")
         {
             SetName(name);
             SetSurname(surname);
             SetBirthDate(birthDate);
             SetAddress(address);
-            SetPhoneNumber(phoneNumber);
 
             gradeCW = new List<int>();
             gradeHW = new List<int>();
@@ -77,58 +76,87 @@ namespace HW_ClassStudent
     
         public void SetName(string name)
         {
-            this.name = (CheckCorrect.CheckString(name, 2)) ? name : "Student";
+            if (!CheckCorrect.CheckString(name, 2))
+            {
+                throw new Exception("Name student must be >= 2 symbols!");
+            }
+            this.name = name;
         }
 
         public void SetSurname(string surname)
         {
-            this.surname = (CheckCorrect.CheckString(surname, 3)) ? surname : "(empty)";
+            if (!CheckCorrect.CheckString(surname, 2))
+            {
+                throw new Exception("Surname student must be >= 3 symbols!");
+            }
+            this.surname = surname;
         }
 
         public void SetBirthDate(DateTime birthDate)
         {
-            if (birthDate != null && ((DateTime.Now.Year - birthDate.Year) >= minYearStud))
+            if (birthDate == null)
             {
-                this.birthDate = birthDate;
+                throw new NullReferenceException("Reference DateTime must be not null!");
             }
-            else
+
+            // DateTime.Now.Year - значение по умолчанию (если вызывается конструктор по умолчанию)
+            else if (birthDate.Year != DateTime.Now.Year)
             {
-                this.birthDate = new DateTime(DateTime.Now.Year - minYearStud, 1, 1);
+                if ((DateTime.Now.Year - birthDate.Year) < minYearStud)
+                {
+                    throw new Exception($"The student must be over {minYearStud} years of age!");
+                }
             }
+            this.birthDate = birthDate;
         }
 
         public void SetAddress(Address address)
         {
-            this.address = (address != null) ? address : new Address();
+            if (address == null)
+            {
+                throw new NullReferenceException("Reference Address must be not null!");
+            }
+            this.address = address;
         }
 
         public void SetPhoneNumber(string phoneNumber)
         {
-            this.phoneNumber = (CheckCorrect.CheckPhoneNumber(phoneNumber)) ? phoneNumber : "(empty)";
+            // empty - значение по умолчанию (если вызывается конструктор по умолчанию)
+            if (phoneNumber != "empty")
+            {
+                if (!CheckCorrect.CheckPhoneNumber(phoneNumber))
+                {
+                    throw new Exception("Incorrect phone number!");
+                }
+            }
+            this.phoneNumber = phoneNumber;
         }
 
         public void AddGradeCW(int grade)
         {
-            if (CheckCorrect.CheckDigit(grade, 1, 12))
+            if (!CheckCorrect.CheckDigit(grade, 1, 12))
             {
-                gradeCW.Add(grade);
+                throw new Exception("Grade for CW must be from 1 to 12!");
             }
+            gradeCW.Add(grade);
         }
 
         public void AddGradeHW(int grade)
         {
-            if (CheckCorrect.CheckDigit(grade, 1, 12))
+            if (!CheckCorrect.CheckDigit(grade, 1, 12))
             {
-                gradeHW.Add(grade);
+                throw new Exception("Grade for HW must be from 1 to 12!");
             }
+            gradeHW.Add(grade);
         }
 
         public void AddGradeExam(int grade)
         {
-            if (CheckCorrect.CheckDigit(grade, 1, 100))
+            if (!CheckCorrect.CheckDigit(grade, 1, 100))
             {
-                gradeExam.Add(grade);
+                throw new Exception("Grade for exam must be from 1 to 100!");
             }
+            gradeExam.Add(grade);
         }
 
         public float AverageGradeCW()
