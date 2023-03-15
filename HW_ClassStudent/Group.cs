@@ -114,17 +114,29 @@ namespace HW_ClassStudent
 
         public void SetTitle(string title)
         {
-            this.title = (title.Length >= 2) ? title : "TitleGroup";
+            if (title.Length < 2)
+            {
+                throw new ArgumentException("Group title must be >= 2 symbols!");
+            }
+            this.title = title;
         }
 
         public void SetSpecialization(string specialization)
         {
-            this.specialization = (specialization.Length >= 3) ? specialization : "Specialization";
+            if (specialization.Length < 3)
+            {
+                throw new ArgumentException("Group specialization must be >= 3 symbols!");
+            }
+            this.specialization = specialization;
         }
 
         public void SetNumKurs(int numKurs)
         {
-            this.numKurs = (numKurs >= 1 && numKurs <= 10) ? numKurs : 1;
+            if (numKurs < 1 || numKurs > 10)
+            {
+                throw new ArgumentException("Group numKurs must be from 1 to 10 value!");
+            }
+            this.numKurs = numKurs;
         }
 
         public void ShowGroupInfo()
@@ -159,18 +171,20 @@ namespace HW_ClassStudent
 
         public void AddStudent(Student student)
         {
-            if (student != null)
+            if (student == null)
             {
-                // если студент которого добавляем есть в списке студентов, то не добавляем (узнаём по ID)
-                foreach (Student stud in students)
-                {
-                    if (stud.GetID() == student.GetID())
-                    {
-                        return;
-                    }
-                }
-                students.Add(student);
+                throw new NullReferenceException("Student reference must be not null!");
             }
+
+            // если студент которого добавляем есть в списке студентов, то не добавляем (узнаём по ID)
+            foreach (Student stud in students)
+            {
+                if (stud.GetID() == student.GetID())
+                {
+                    return;
+                }
+            }
+            students.Add(student);
         }
 
         public Student GetStudentByID(int id)
@@ -182,16 +196,24 @@ namespace HW_ClassStudent
                     return stud;
                 }
             }
-            return null;
+            throw new Exception($"Student with this id - {id} was not found!");
         }
 
         public void StudentTransferToAnotherGroup(int id, Group newGroup)
         {
-            Student stud = GetStudentByID(id);
-            if (stud != null)
+            if (newGroup == null)
             {
-                newGroup.AddStudent(GetStudentByID(id));
+                throw new NullReferenceException("Group reference must be not null!");
+            }
+            try
+            {
+                Student stud = GetStudentByID(id);
+                newGroup.AddStudent(stud);
                 DelStudent(stud);
+            }
+            catch (Exception ex)
+            {
+                throw;
             }
         }
 
