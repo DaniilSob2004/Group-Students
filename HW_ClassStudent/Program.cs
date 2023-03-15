@@ -19,10 +19,28 @@ namespace HW_ClassStudent
             // 4 студента
             Student stud = new Student();
             Student stud2 = new Student("Andrey", "Soboliev");
-            Student stud3 = new Student("Daniil", "Soboliev",
-                                        new DateTime(2004, 3, 25),
-                                        new Address("Ukraine", "Odessa", "Dalnya", 24),
+            Student stud3;
+
+            try
+            {
+                stud3 = new Student("Daniil", "Soboliev",
+                                        new DateTime(2020, 3, 25),  // ошибка в dateTime, при попытке передачи не правильного возраста(даты)
+                                        new Address(),
                                         "+380688936454");
+            }
+            catch (Exception er)
+            {
+                Console.WriteLine(er.Message + "\n");
+            }
+            finally
+            {
+                stud3 = new Student("Daniil", "Soboliev",
+                                        new DateTime(2004, 3, 25),  // исправили ошибку
+                                        new Address(),
+                                        "+380688936454");
+            }
+
+
             Student stud4 = new Student("Anna", "Solovey");
 
             // добавляем в список 3 студентов
@@ -54,20 +72,33 @@ namespace HW_ClassStudent
             group.ShowSortStudents();
 
             // добавление студента
-            group.AddStudent(stud4);
+            Student testStud = null;
+            try
+            {
+                group.AddStudent(testStud);  // ошибка, передаём null
+            }
+            catch (NullReferenceException er)
+            {
+                Console.WriteLine(er.Message + "\n");
+            }
+            finally
+            {
+                group.AddStudent(stud4);
+            }
             group.ShowSortStudents();
 
             // редактирование данных о студенте
             Student editStud = group.GetStudentByID(2);
-            if (editStud != null)
+            try
             {
                 editStud.SetName("HELLO");
             }
-            else
+            catch (NullReferenceException)  // если студент не найден (вернуло null)
             {
-                Console.WriteLine("No such student!");
-            }
+                Console.WriteLine("No such student!\n");
+            } 
             group.ShowSortStudents();
+
             Console.WriteLine("---------------------\n");
 
             // создание второй группы
