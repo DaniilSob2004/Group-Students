@@ -213,5 +213,45 @@ namespace HW_ClassStudent
 
             return sb.ToString();
         }
+
+        public override bool Equals(object obj)
+        {
+            // проверяем что за тип
+            Student stud = obj as Student;
+
+            if (stud == null)
+            {
+                return false;
+            }
+
+            // сравнивает по средней оценки по экзаменам
+            return (AverageGradeExam() == stud.AverageGradeExam());
+        }
+
+        public static bool operator ==(Student stud, Student stud2)
+        {
+            // если stud и stud2 its null reference
+            if (ReferenceEquals(stud, stud2))
+            {
+                return true;
+            }
+
+            if ((object)stud != null)
+            {
+                return stud.Equals(stud2);
+            }
+
+            if ((object)stud2 != null)
+            {
+                return stud2.Equals(stud);
+            }
+
+            return false;
+        }
+
+        public static bool operator!=(Student stud, Student stud2)
+        {
+            return !(stud == stud2);
+        }
     }
 }

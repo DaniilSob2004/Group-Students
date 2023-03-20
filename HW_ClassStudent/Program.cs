@@ -118,8 +118,35 @@ namespace HW_ClassStudent
             group.ShowSortStudents();
 
             // отчисление одного самого неуспевающего студента
-            group.DelBadStudent();
-            group.ShowSortStudents();
+            //group.DelBadStudent();
+            //group.ShowSortStudents();
+
+            // проерка на равенство студентов
+            try
+            {
+                if (group.GetStudentByID(2) == group.GetStudentByID(1))
+                {
+                    Console.WriteLine("student with id 4 == student with id 1");
+                }
+                else
+                {
+                    Console.WriteLine("student with id 4 != student with id 1");
+                }
+            }
+            catch (Exception er)
+            {
+                Console.WriteLine(er.Message);
+            }
+
+            // проерка на равенство групп
+            if (group == group2)
+            {
+                Console.WriteLine($"{group.GetTitle()} == {group2.GetTitle()}");
+            }
+            else
+            {
+                Console.WriteLine($"{group.GetTitle()} != {group2.GetTitle()}");
+            }
         }
     }
 }

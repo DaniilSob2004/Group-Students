@@ -253,5 +253,45 @@ namespace HW_ClassStudent
                 DelStudent(badStud);
             }
         }
+
+        public override bool Equals(object obj)
+        {
+            // проверяем что за тип
+            Group group = obj as Group;
+
+            if (group == null)
+            {
+                return false;
+            }
+
+            // сравнивает по кол-ву студентов
+            return students.Count == group.GetStudents().Count;
+        }
+
+        public static bool operator ==(Group group, Group group2)
+        {
+            // если group и group2 its null reference
+            if (ReferenceEquals(group, group2))
+            {
+                return true;
+            }
+
+            if ((object)group != null)
+            {
+                return group.Equals(group2);
+            }
+
+            if ((object)group2 != null)
+            {
+                return group2.Equals(group);
+            }
+
+            return false;
+        }
+
+        public static bool operator !=(Group group, Group group2)
+        {
+            return !(group == group2);
+        }
     } 
 }
