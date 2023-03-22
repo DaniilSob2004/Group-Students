@@ -32,10 +32,11 @@ namespace HW_ClassStudent
 
         public Student(string name, string surname, DateTime birthDate, Address address, string phoneNumber = "empty")
         {
-            SetName(name);
-            SetSurname(surname);
-            SetBirthDate(birthDate);
-            SetAddress(address);
+            Name = name;
+            Surname = surname;
+            BirthDate = birthDate;
+            Address = address;
+            PhoneNumber = phoneNumber;
 
             gradeCW = new List<int>();
             gradeHW = new List<int>();
@@ -44,93 +45,92 @@ namespace HW_ClassStudent
             id += ++ID;  // id студента
         }
 
-        public int GetID()
+
+        // Свойства
+        public int Id
         {
-            return id;
+            get { return id; }
         }
 
-        public string GetName()
+        public string Name
         {
-            return name;
-        }
-
-        public string GetSurname()
-        {
-            return surname;
-        }
-
-        public DateTime GetBirthDate()
-        {
-            return birthDate;
-        }
-
-        public Address GetAddress()
-        {
-            return address;
-        }
-
-        public string GetPhoneNumber()
-        {
-            return phoneNumber;
-        }
-    
-        public void SetName(string name)
-        {
-            if (!CheckCorrect.CheckString(name, 2))
+            get { return name; }
+            set
             {
-                throw new Exception("Name student must be >= 2 symbols!");
-            }
-            this.name = name;
-        }
-
-        public void SetSurname(string surname)
-        {
-            if (!CheckCorrect.CheckString(surname, 2))
-            {
-                throw new Exception("Surname student must be >= 3 symbols!");
-            }
-            this.surname = surname;
-        }
-
-        public void SetBirthDate(DateTime birthDate)
-        {
-            if (birthDate == null)
-            {
-                throw new NullReferenceException("Reference DateTime must be not null!");
-            }
-
-            // DateTime.Now.Year - значение по умолчанию (если вызывается конструктор по умолчанию)
-            else if (birthDate.Year != DateTime.Now.Year)
-            {
-                if ((DateTime.Now.Year - birthDate.Year) < minYearStud)
+                if (!CheckCorrect.CheckString(value, 2))
                 {
-                    throw new Exception($"The student must be over {minYearStud} years of age!");
+                    throw new Exception("Name student must be >= 2 symbols!");
                 }
+                name = value;
             }
-            this.birthDate = birthDate;
         }
 
-        public void SetAddress(Address address)
+        public string Surname
         {
-            if (address == null)
+            get { return surname; }
+            set
             {
-                throw new NullReferenceException("Reference Address must be not null!");
-            }
-            this.address = address;
-        }
-
-        public void SetPhoneNumber(string phoneNumber)
-        {
-            // empty - значение по умолчанию (если вызывается конструктор по умолчанию)
-            if (phoneNumber != "empty")
-            {
-                if (!CheckCorrect.CheckPhoneNumber(phoneNumber))
+                if (!CheckCorrect.CheckString(value, 2))
                 {
-                    throw new Exception("Incorrect phone number!");
+                    throw new Exception("Surname student must be >= 3 symbols!");
                 }
+                surname = value;
             }
-            this.phoneNumber = phoneNumber;
         }
+
+        public DateTime BirthDate
+        {
+            get { return birthDate; }
+            set
+            {
+                if (value == null)
+                {
+                    throw new NullReferenceException("Reference DateTime must be not null!");
+                }
+
+                // DateTime.Now.Year - значение по умолчанию (если вызывается конструктор по умолчанию)
+                else if (value.Year != DateTime.Now.Year)
+                {
+                    if ((DateTime.Now.Year - value.Year) < minYearStud)
+                    {
+                        throw new Exception($"The student must be over {minYearStud} years of age!");
+                    }
+                }
+                birthDate = value;
+            }
+        }
+
+        public Address Address
+        {
+            get { return address; }
+            set
+            {
+                if (value == null)
+                {
+                    throw new NullReferenceException("Reference Address must be not null!");
+                }
+                address = value;
+            }
+        }
+
+        public string PhoneNumber
+        {
+            get { return phoneNumber; }
+            set
+            {
+                // empty - значение по умолчанию (если вызывается конструктор по умолчанию)
+                if (value != "empty")
+                {
+                    // проверка на корректность ввода
+                    if (!CheckCorrect.CheckPhoneNumber(value))
+                    {
+                        throw new Exception("Incorrect phone number!");
+                    }
+                }
+                phoneNumber = value;
+            }
+        }
+ 
 
         public void AddGradeCW(int grade)
         {
@@ -189,6 +189,7 @@ namespace HW_ClassStudent
             return result / gradeExam.Count;
         }
 
+
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder();
@@ -226,6 +227,11 @@ namespace HW_ClassStudent
 
             // сравнивает по средней оценки по экзаменам
             return (AverageGradeExam() == stud.AverageGradeExam());
+        }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
         }
 
         public static bool operator ==(Student stud, Student stud2)

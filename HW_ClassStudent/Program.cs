@@ -9,7 +9,7 @@ using HW_Address;
 
 namespace HW_ClassStudent
 {
-    internal class Program
+    public class Program
     {
         static void Main(string[] args)
         {
@@ -91,7 +91,7 @@ namespace HW_ClassStudent
             Student editStud = group.GetStudentByID(2);
             try
             {
-                editStud.SetName("HELLO");
+                editStud.Name = "HELLO";
             }
             catch (NullReferenceException)  // если студент не найден (вернуло null)
             {
@@ -141,11 +141,11 @@ namespace HW_ClassStudent
             // проерка на равенство групп
             if (group == group2)
             {
-                Console.WriteLine($"{group.GetTitle()} == {group2.GetTitle()}");
+                Console.WriteLine($"{group.Title} == {group2.Title}");
             }
             else
             {
-                Console.WriteLine($"{group.GetTitle()} != {group2.GetTitle()}");
+                Console.WriteLine($"{group.Title} != {group2.Title}");
             }
         }
     }

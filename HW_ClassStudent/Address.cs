@@ -38,30 +38,34 @@ namespace HW_Address
         public Address(string country, string city, string street, int houseNum)
         {
             InitialCountryList();
-            SetCountry(country);
-            SetCity(city);
-            SetStreet(street);
-            SetHouseNum(houseNum);
+            Country = country;
+            City = city;
+            Street = street;
+            HouseNum = houseNum;
         }
 
-        public void SetCountry(string country)
+        public string Country
         {
-            this.country = (countryList.Contains(country)) ? country : "Ukraine";
+            get { return country; }
+            set { country = (countryList.Contains(value)) ? value : "Ukraine"; }
         }
 
-        public void SetCity(string city)
+        public string City
         {
-            this.city = (city.Length >= 3) ? city : "Odessa";
+            get { return city; }
+            set { city = (value.Length >= 3) ? value : "Odessa"; }
         }
 
-        public void SetStreet(string street)
+        public string Street
         {
-            this.street = (street.Length >= 3) ? street : "(not indicated)";
+            get { return street; }
+            set { street = (value.Length >= 3) ? value : "(not indicated)"; }
         }
 
-        public void SetHouseNum(int houseNum)
+        public int HouseNum
         {
-            this.houseNum = (houseNum > 0 && houseNum <= 1000) ? houseNum : 0;
+            get { return houseNum; }
+            set { houseNum = (value > 0 && value <= 1000) ? value : 0; }
         }
 
         public override string ToString() 

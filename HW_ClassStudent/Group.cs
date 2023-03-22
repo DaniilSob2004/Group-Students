@@ -49,7 +49,7 @@ namespace HW_ClassStudent
         {
             for (int i = 0; i < students.Count; i++)
             {
-                arrNames[i] = students[i].GetName() + " " + students[i].GetSurname() + ", ID(" + students[i].GetID() + ")";
+                arrNames[i] = students[i].Name + " " + students[i].Surname + ", ID(" + students[i].Id + ")";
             }
         }
 
@@ -67,9 +67,9 @@ namespace HW_ClassStudent
         // конструктор ддл параметров группы
         public Group(string title, string specialization, int numKurs)
         {
-            SetTitle(title);
-            SetSpecialization(specialization);
-            SetNumKurs(numKurs);
+            Title = title;
+            Specialization = specialization;
+            NumKurs = numKurs;
         }
 
         // конструктор по умолчаниюи генерация студентов
@@ -83,7 +83,7 @@ namespace HW_ClassStudent
 
         // конструктор для существующей группы
         public Group(Group group) :
-            this(group.GetTitle(), group.GetSpecialization(), group.GetNumKurs(), group.GetStudents()) {}
+            this(group.Title, group.Specialization, group.NumKurs, group.Students) {}
 
         // конструктор для существующего списка студентов и доп параметров для группы
         public Group(string title, string specialization, int numKurs, List<Student> students):
@@ -92,52 +92,51 @@ namespace HW_ClassStudent
             CopyStudents(students);
         }
 
-        public string GetTitle()
-        {
-            return title;
-        }
 
-        public string GetSpecialization()
+        public string Title
         {
-            return specialization;
-        }
-
-        public int GetNumKurs()
-        {
-            return numKurs;
-        }
-
-        public List<Student> GetStudents()
-        {
-            return students;
-        }
-
-        public void SetTitle(string title)
-        {
-            if (title.Length < 2)
+            get { return title; }
+            set
             {
-                throw new ArgumentException("Group title must be >= 2 symbols!");
+                if (value.Length < 2)
+                {
+                    throw new ArgumentException("Group title must be >= 2 symbols!");
+                }
+                title = value;
             }
-            this.title = title;
         }
 
-        public void SetSpecialization(string specialization)
+        public string Specialization
         {
-            if (specialization.Length < 3)
+            get { return specialization; }
+            set
             {
-                throw new ArgumentException("Group specialization must be >= 3 symbols!");
+                if (value.Length < 3)
+                {
+                    throw new ArgumentException("Group specialization must be >= 3 symbols!");
+                }
+                specialization = value;
             }
-            this.specialization = specialization;
         }
 
-        public void SetNumKurs(int numKurs)
+        public int NumKurs
         {
-            if (numKurs < 1 || numKurs > 10)
+            get { return numKurs; }
+            set
             {
-                throw new ArgumentException("Group numKurs must be from 1 to 10 value!");
+                if (value < 1 || value > 10)
+                {
+                    throw new ArgumentException("Group numKurs must be from 1 to 10 value!");
+                }
+                numKurs = value;
             }
-            this.numKurs = numKurs;
         }
+
+        public List<Student> Students
+        {
+            get { return students; }
+        }
+
 
         public void ShowGroupInfo()
         {
@@ -179,7 +178,7 @@ namespace HW_ClassStudent
             // если студент которого добавляем есть в списке студентов, то не добавляем (узнаём по ID)
             foreach (Student stud in students)
             {
-                if (stud.GetID() == student.GetID())
+                if (stud.Id == student.Id)
                 {
                     return;
                 }
@@ -191,7 +190,7 @@ namespace HW_ClassStudent
         {
             foreach (Student stud in students)
             {
-                if (stud.GetID() == id)
+                if (stud.Id == id)
                 {
                     return stud;
                 }
@@ -211,7 +210,7 @@ namespace HW_ClassStudent
                 newGroup.AddStudent(stud);
                 DelStudent(stud);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw;
             }
@@ -254,6 +253,7 @@ namespace HW_ClassStudent
             }
         }
 
+
         public override bool Equals(object obj)
         {
             // проверяем что за тип
@@ -265,7 +265,12 @@ namespace HW_ClassStudent
             }
 
             // сравнивает по кол-ву студентов
-            return students.Count == group.GetStudents().Count;
+            return students.Count == group.Students.Count;
+        }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
         }
 
         public static bool operator ==(Group group, Group group2)
