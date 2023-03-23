@@ -147,6 +147,33 @@ namespace HW_ClassStudent
             {
                 Console.WriteLine($"{group.Title} != {group2.Title}");
             }
+
+
+            // использование индексатора (по id студента, возвращается студент)
+            Console.WriteLine("\n-------------------------");
+            try
+            {
+                Console.WriteLine(group[2]);
+            }
+            catch (Exception er)
+            {
+                Console.WriteLine(er.Message);
+            }
+
+            // использование индексатора (по имени, возвращается список студентов)
+            Console.WriteLine("\n-------------------------");
+            try
+            {
+                // перебираем список и выводим инфу
+                foreach (var s in group["Daniil"])
+                {
+                    Console.WriteLine(s);
+                }
+            }
+            catch (Exception er)
+            {
+                Console.WriteLine(er.Message);
+            }
         }
     }
 }

@@ -62,6 +62,21 @@ namespace HW_ClassStudent
             }
         }
 
+        private List<Student> GetStudentsByName(string name)
+        {
+            List<Student> listStud = new List<Student>();
+
+            foreach (var stud in students)
+            {
+                if (stud.Name == name)
+                {
+                    listStud.Add(stud);
+                }
+            }
+
+            return listStud;
+        }
+
         // -----
 
         // конструктор ддл параметров группы
@@ -297,6 +312,25 @@ namespace HW_ClassStudent
         public static bool operator !=(Group group, Group group2)
         {
             return !(group == group2);
+        }
+
+        public Student this[int id]
+        {
+            get
+            {
+                return GetStudentByID(id);
+            }
+        }
+
+        public List<Student> this[string name]
+        {
+            get
+            {
+                List<Student> listStud = GetStudentsByName(name);
+
+                if (listStud.Count == 0) throw new Exception("Error, no students by this name!");
+                return listStud;
+            }
         }
     } 
 }
