@@ -9,14 +9,9 @@ using CorrectInput;
 
 namespace HW_ClassStudent
 {
-    public class Student
+    public class Student : Person
     {
         private int id;
-        private string name;
-        private string surname;
-        private DateTime birthDate;
-        private Address address;
-        private string phoneNumber;
         private List<int> gradeCW;
         private List<int> gradeHW;
         private List<int> gradeExam;
@@ -28,15 +23,12 @@ namespace HW_ClassStudent
             this("Name", "Surname") { }
 
         public Student(string name, string surname) : 
-            this(name, surname, DateTime.Now, new Address()) { }
+            this(name, surname, new DateTime(), new Address()) { }
 
-        public Student(string name, string surname, DateTime birthDate, Address address, string phoneNumber = "empty")
+        public Student(string name, string surname, DateTime birthDate, Address address, string phoneNumber = "") :
+            base(name, surname, birthDate, address, phoneNumber)
         {
-            Name = name;
-            Surname = surname;
-            BirthDate = birthDate;
-            Address = address;
-            PhoneNumber = phoneNumber;
+            BirthDate = birthDate;  // для повторной проверки
 
             gradeCW = new List<int>();
             gradeHW = new List<int>();
@@ -46,88 +38,33 @@ namespace HW_ClassStudent
         }
 
 
-        // Свойства
+        // Свойство
         public int Id
         {
             get { return id; }
         }
 
-        public string Name
-        {
-            get { return name; }
-            set
-            {
-                if (!CheckCorrect.CheckString(value, 2))
-                {
-                    throw new Exception("Name student must be >= 2 symbols!");
-                }
-                name = value;
-            }
-        }
-
-        public string Surname
-        {
-            get { return surname; }
-            set
-            {
-                if (!CheckCorrect.CheckString(value, 2))
-                {
-                    throw new Exception("Surname student must be >= 3 symbols!");
-                }
-                surname = value;
-            }
-        }
-
         public DateTime BirthDate
         {
-            get { return birthDate; }
+            get { return base.BirthDate; }
             set
             {
-                if (value == null)
+                // если НЕ пустая дата(new DateTime()), то значит это НЕ значение по умолчанию
+                if (value != new DateTime())
                 {
-                    throw new NullReferenceException("Reference DateTime must be not null!");
-                }
-
-                // DateTime.Now.Year - значение по умолчанию (если вызывается конструктор по умолчанию)
-                else if (value.Year != DateTime.Now.Year)
-                {
-                    if ((DateTime.Now.Year - value.Year) < minYearStud)
+                    if (!CheckCorrect.CheckBirthYear(value.Year))
                     {
                         throw new Exception($"The student must be over {minYearStud} years of age!");
                     }
                 }
-                birthDate = value;
-            }
-        }
 
-        public Address Address
-        {
-            get { return address; }
-            set
-            {
-                if (value == null)
+                // если это пустая дата, то значит это значение по умолчанию, и отнимаем от нашего года - 14(минимальный возраст)
+                else
                 {
-                    throw new NullReferenceException("Reference Address must be not null!");
+                    base.BirthDate = new DateTime(DateTime.Now.Year - minYearStud, DateTime.Now.Month, DateTime.Now.Day);
                 }
-                address = value;
-            }
-        }
 
-        public string PhoneNumber
-        {
-            get { return phoneNumber; }
-            set
-            {
-                // empty - значение по умолчанию (если вызывается конструктор по умолчанию)
-                if (value != "empty")
-                {
-                    // проверка на корректность ввода
-                    if (!CheckCorrect.CheckPhoneNumber(value))
-                    {
-                        throw new Exception("Incorrect phone number!");
-                    }
-                }
-                phoneNumber = value;
+                // если дата доп. проверку прошла, то ничего не делаем, т.к. в базавом классе это значение уже установилось
             }
         }
  
@@ -196,10 +133,8 @@ namespace HW_ClassStudent
 
             sb.Append("---------- Student Info ---------\n");
             sb.Append($"ID: {id}\n");
-            sb.Append($"Name: {name}\nSurname: {surname}\n");
-            sb.Append($"Birthdate: {birthDate.Day}.{birthDate.Month}.{birthDate.Year}\n");
-            sb.Append($"Address: {address}\n");
-            sb.Append($"phoneNumber: {phoneNumber}\n");
+
+            sb.Append(base.ToString());
 
             sb.Append("Grade class work: ");
             foreach (int grade in gradeCW) sb.Append($"{grade} - ");
@@ -211,6 +146,7 @@ namespace HW_ClassStudent
 
             sb.Append("Grade exam: ");
             foreach (int grade in gradeExam) sb.Append($"{grade} - ");
+            sb.Append("\n");
 
             return sb.ToString();
         }

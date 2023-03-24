@@ -27,5 +27,10 @@ namespace CorrectInput
 
             return result.Success;
         }
+
+        static public bool CheckBirthYear(int year, int minYearsOld = 14, int maxYearsOld = 100)
+        {
+            return (DateTime.Now.Year - year) >= minYearsOld && (DateTime.Now.Year - year) <= maxYearsOld;
+        }
     }
 }

@@ -11,7 +11,7 @@ namespace HW_ClassStudent
 {
     public class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
             List<Student> arrStud = new List<Student>();
             Random r = new Random();
@@ -24,7 +24,7 @@ namespace HW_ClassStudent
             try
             {
                 stud3 = new Student("Daniil", "Soboliev",
-                                        new DateTime(2020, 3, 25),  // ошибка в dateTime, при попытке передачи не правильного возраста(даты)
+                                        new DateTime(2020, 5, 14),  // ошибка в dateTime, при попытке передачи не правильного возраста(даты)
                                         new Address(),
                                         "+380688936454");
             }
@@ -40,8 +40,8 @@ namespace HW_ClassStudent
                                         "+380688936454");
             }
 
-
-            Student stud4 = new Student("Anna", "Solovey");
+            // создаём аспиранта
+            Aspirant stud4 = new Aspirant("Anna", "Solovey", "master's");
 
             // добавляем в список 3 студентов
             arrStud.Add(stud);
@@ -65,13 +65,16 @@ namespace HW_ClassStudent
             for (int i = 0; i < 5; i++) stud4.AddGradeHW(r.Next(1, 12));
             for (int i = 0; i < 2; i++) stud4.AddGradeExam(r.Next(1, 100));
 
+
             // создание группы
             Group group = new Group("P-12", "Programmer", 2, arrStud);
 
             // вывод сортированных по имени студентов и инфа о группе
             group.ShowSortStudents();
 
+
             // добавление студента
+            Console.WriteLine("\nAdd student:");
             Student testStud = null;
             try
             {
@@ -87,50 +90,64 @@ namespace HW_ClassStudent
             }
             group.ShowSortStudents();
 
+
             // редактирование данных о студенте
-            Student editStud = group.GetStudentByID(2);
+            Console.WriteLine("\nEdit name student:");
             try
             {
-                editStud.Name = "HELLO";
+                group[2].Name = "HELLO";
             }
-            catch (NullReferenceException)  // если студент не найден (вернуло null)
+            catch (Exception)  // если студент не найден (вернуло null)
             {
                 Console.WriteLine("No such student!\n");
             } 
             group.ShowSortStudents();
 
-            Console.WriteLine("---------------------\n");
 
             // создание второй группы
+            Console.WriteLine("\nCreate new group:");
             Group group2 = new Group("P-24", "Designer", 3);
             group2.ShowSortStudents();
 
+
             // перевод студента из одной группы в другую
+            Console.WriteLine("\nStudent transfer to another group:");
             group.StudentTransferToAnotherGroup(3, group2);
             group.ShowSortStudents();
             group2.ShowSortStudents();
 
+
             // вывод всей информации о каждом студенте
+            Console.WriteLine("\nShow all student info(group1):");
             group.ShowAllStudInfo();
 
+            Console.WriteLine("Show all student info(group2):");
+            group2.ShowAllStudInfo();
+
+
             // отчисление всех студентов не сдавших экзамены
-            group.DelStudentsFromExam();
-            group.ShowSortStudents();
+            //Console.WriteLine("Expulsion of all students who did not pass the exams:");
+            //group.DelStudentsFromExam();
+            //group.ShowSortStudents();
+
 
             // отчисление одного самого неуспевающего студента
+            //Console.WriteLine("Expulsion of one of the most underachieving students:");
             //group.DelBadStudent();
             //group.ShowSortStudents();
 
+
             // проерка на равенство студентов
+            Console.WriteLine("Student equality test:");
             try
             {
-                if (group.GetStudentByID(2) == group.GetStudentByID(1))
+                if (group[2] == group[1])
                 {
-                    Console.WriteLine("student with id 4 == student with id 1");
+                    Console.WriteLine("student with id 2 == student with id 1");
                 }
                 else
                 {
-                    Console.WriteLine("student with id 4 != student with id 1");
+                    Console.WriteLine("student with id 2 != student with id 1");
                 }
             }
             catch (Exception er)
@@ -138,7 +155,9 @@ namespace HW_ClassStudent
                 Console.WriteLine(er.Message);
             }
 
+
             // проерка на равенство групп
+            Console.WriteLine("\nGroup equality test:");
             if (group == group2)
             {
                 Console.WriteLine($"{group.Title} == {group2.Title}");
@@ -150,7 +169,7 @@ namespace HW_ClassStudent
 
 
             // использование индексатора (по id студента, возвращается студент)
-            Console.WriteLine("\n-------------------------");
+            Console.WriteLine("\nIndexer usage(id):");
             try
             {
                 Console.WriteLine(group[2]);
@@ -160,8 +179,9 @@ namespace HW_ClassStudent
                 Console.WriteLine(er.Message);
             }
 
+
             // использование индексатора (по имени, возвращается список студентов)
-            Console.WriteLine("\n-------------------------");
+            Console.WriteLine("\nIndexer usage(name):");
             try
             {
                 // перебираем список и выводим инфу
@@ -174,6 +194,7 @@ namespace HW_ClassStudent
             {
                 Console.WriteLine(er.Message);
             }
+            Console.WriteLine();
         }
     }
 }
