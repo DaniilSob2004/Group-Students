@@ -11,10 +11,53 @@ namespace HW_ClassStudent
 {
     public class Program
     {
+        static void ShowStudents(List<Student> students)
+        {
+            // вывод инфы о студентах
+            foreach (Student student in students)
+            {
+                Console.WriteLine(student);
+                Console.WriteLine($"Average grade of HW: {student.AverageGradeHW()}");
+            }
+        }
+
         static void Main()
         {
-            List<Student> arrStud = new List<Student>();
+            // использование сортировки студентов
             Random r = new Random();
+
+            // создаём массив из 5 студентов
+            List<Student> students = new List<Student>();
+            students.Add(new Student("Daniil", "Soboliev"));
+            students.Add(new Student("Andrey", "Soboliev"));
+            students.Add(new Student("Alex", "Zahoruiko"));
+            students.Add(new Student("Anna", "Maliarova"));
+            students.Add(new Student("Bob", "Tompson"));
+
+            // заполняем студентов оценками за дз
+            foreach (Student student in students)
+            {
+                for (int i = 0; i < 5; i++)
+                {
+                    student.AddGradeHW(r.Next(1, 12));
+                }
+            }
+
+            ShowStudents(students);
+
+            // сортируем студентов по средней оценки за ДЗ
+            Console.WriteLine("\n------------- AFTER SORT STUDENT -------------");
+            students.Sort();
+
+            ShowStudents(students);
+
+
+            Console.WriteLine("\n==============================\n\n");
+            // -------------------------------------
+            // использование студентов и группы
+
+
+            List<Student> arrStud = new List<Student>();
 
             // 4 студента
             Student stud = new Student();
@@ -112,7 +155,14 @@ namespace HW_ClassStudent
 
             // перевод студента из одной группы в другую
             Console.WriteLine("\nStudent transfer to another group:");
-            group.StudentTransferToAnotherGroup(3, group2);
+            try
+            {
+                group.StudentTransferToAnotherGroup(3, group2);
+            }
+            catch (Exception er)
+            {
+                Console.WriteLine(er.Message + "\n");
+            }
             group.ShowSortStudents();
             group2.ShowSortStudents();
 

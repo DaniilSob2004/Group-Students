@@ -9,7 +9,7 @@ using CorrectInput;
 
 namespace HW_ClassStudent
 {
-    public class Student : Person
+    public class Student : Person, IComparable
     {
         private int id;
         private List<int> gradeCW;
@@ -127,11 +127,23 @@ namespace HW_ClassStudent
         }
 
 
+        public int CompareTo(object obj)  // реализация интерфейса
+        {
+            // проверяем тип объекта который передали в параметр
+            Student stud = obj as Student;
+            if (stud == null) throw new Exception("Reference obj is not a Student!");
+
+            // сравниваем студентов по средней оценки за ДЗ
+            if (AverageGradeHW() < stud.AverageGradeHW()) return -1;
+            if (AverageGradeHW() > stud.AverageGradeHW()) return 1;
+            return 0;
+        }
+
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder();
 
-            sb.Append("---------- Student Info ---------\n");
+            sb.Append("\n---------- Student Info ---------\n");
             sb.Append($"ID: {id}\n");
 
             sb.Append(base.ToString());
@@ -146,7 +158,6 @@ namespace HW_ClassStudent
 
             sb.Append("Grade exam: ");
             foreach (int grade in gradeExam) sb.Append($"{grade} - ");
-            sb.Append("\n");
 
             return sb.ToString();
         }
