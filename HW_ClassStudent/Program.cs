@@ -42,17 +42,20 @@ namespace HW_ClassStudent
                     student.AddGradeHW(r.Next(1, 12));
                 }
             }
+            ShowStudents(students);
 
+            // сортируем студентов по имени
+            Console.WriteLine("\n\n------------- AFTER SORT STUDENT BY NAME -------------");
+            students.Sort(new NameStudentComparer());
             ShowStudents(students);
 
             // сортируем студентов по средней оценки за ДЗ
-            Console.WriteLine("\n------------- AFTER SORT STUDENT -------------");
-            students.Sort();
-
+            Console.WriteLine("\n\n------------- AFTER SORT STUDENT BY AVERAGE GRADE HW -------------");
+            students.Sort(new GradeHWStudentComparer());
             ShowStudents(students);
 
 
-            Console.WriteLine("\n==============================\n\n");
+            /*Console.WriteLine("\n==============================\n\n");
             // -------------------------------------
             // использование студентов и группы
 
@@ -244,7 +247,7 @@ namespace HW_ClassStudent
             {
                 Console.WriteLine(er.Message);
             }
-            Console.WriteLine();
+            Console.WriteLine();*/
         }
     }
 }

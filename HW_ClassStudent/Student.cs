@@ -207,4 +207,22 @@ namespace HW_ClassStudent
             return !(stud == stud2);
         }
     }
+
+    // сравнение по имени
+    public class NameStudentComparer : IComparer<Student>
+    {
+        public int Compare(Student left, Student right)
+        {
+            return String.Compare(left.Name, right.Name);
+        }
+    }
+
+    // сравнение по средней оценки за ДЗ
+    public class GradeHWStudentComparer : IComparer<Student>
+    {
+        public int Compare(Student left, Student right)
+        {
+            return left.CompareTo(right);  // вызов готового метода CompareTo() из класса Student
+        }
+    }
 }
