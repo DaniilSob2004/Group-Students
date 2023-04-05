@@ -11,16 +11,6 @@ namespace HW_ClassStudent
 {
     public class Program
     {
-        static void ShowStudents(List<Student> students)
-        {
-            // вывод инфы о студентах
-            foreach (Student student in students)
-            {
-                Console.WriteLine(student);
-                Console.WriteLine($"Average grade of HW: {student.AverageGradeHW()}");
-            }
-        }
-
         static void Main()
         {
             // использование сортировки студентов
@@ -34,6 +24,9 @@ namespace HW_ClassStudent
             students.Add(new Student("Anna", "Maliarova"));
             students.Add(new Student("Bob", "Tompson"));
 
+            // создаём группу и в конструктор передаём список студентов
+            Group P12 = new Group(students);
+
             // заполняем студентов оценками за дз
             foreach (Student student in students)
             {
@@ -42,17 +35,23 @@ namespace HW_ClassStudent
                     student.AddGradeHW(r.Next(1, 12));
                 }
             }
-            ShowStudents(students);
 
-            // сортируем студентов по имени
+            // использование foreach для перебора группы студентов
+            foreach (Student stud in P12) Console.WriteLine(stud);
+
+            // сортируем студентов группы по имени
             Console.WriteLine("\n\n------------- AFTER SORT STUDENT BY NAME -------------");
-            students.Sort(new NameStudentComparer());
-            ShowStudents(students);
+            P12.Students.Sort(new NameStudentComparer());  // используем класс 'сравнитель'
 
-            // сортируем студентов по средней оценки за ДЗ
+            // использование foreach для перебора группы студентов
+            foreach (Student stud in P12) Console.WriteLine(stud);
+
+            // сортируем студентов группы по средней оценки за ДЗ
             Console.WriteLine("\n\n------------- AFTER SORT STUDENT BY AVERAGE GRADE HW -------------");
-            students.Sort(new GradeHWStudentComparer());
-            ShowStudents(students);
+            P12.Students.Sort(new GradeHWStudentComparer());  // используем класс 'сравнитель'
+
+            // использование foreach для перебора группы студентов
+            foreach (Student stud in P12) Console.WriteLine(stud);
 
 
             /*Console.WriteLine("\n==============================\n\n");

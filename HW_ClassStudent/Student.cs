@@ -159,6 +159,8 @@ namespace HW_ClassStudent
             sb.Append("Grade exam: ");
             foreach (int grade in gradeExam) sb.Append($"{grade} - ");
 
+            sb.Append($"\nAverage grade of HW: {AverageGradeHW()}");
+
             return sb.ToString();
         }
 

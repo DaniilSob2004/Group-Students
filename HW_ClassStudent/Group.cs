@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,7 +9,7 @@ using HW_Address;
 
 namespace HW_ClassStudent
 {
-    public class Group
+    public class Group : IEnumerable  // реализация интерфейса
     {
         public const int GEN_STUDENTS = 5;
         public const int MIN_GRADE_EXAM = 40;
@@ -105,6 +106,13 @@ namespace HW_ClassStudent
             this(title, specialization, numKurs)
         {
             CopyStudents(students);
+        }
+
+
+        // реализация метода из интерфейса IEnumerable
+        public IEnumerator GetEnumerator()
+        {
+            return new StudentEnumerator(students);
         }
 
 
