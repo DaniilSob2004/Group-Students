@@ -30,28 +30,31 @@ namespace HW_ClassStudent
             // заполняем студентов оценками за дз
             foreach (Student student in students)
             {
-                for (int i = 0; i < 5; i++)
-                {
-                    student.AddGradeHW(r.Next(1, 12));
-                }
+                for (int i = 0; i < 5; i++) student.AddGradeHW(r.Next(1, 12));
+                for (int i = 0; i < 5; i++) student.AddGradeCW(r.Next(5, 12));
+                for (int i = 0; i < 5; i++) student.AddGradeExam(r.Next(7, 12));
             }
 
             // использование foreach для перебора группы студентов
             foreach (Student stud in P12) Console.WriteLine(stud);
 
+            // печатаем сиртификаты студентов
+            Console.WriteLine("\n--------------- Certificates ---------------");
+            foreach (Student stud in P12) Certificate.PrintCertificate(stud);
+
             // сортируем студентов группы по имени
-            Console.WriteLine("\n\n------------- AFTER SORT STUDENT BY NAME -------------");
+            /*Console.WriteLine("\n\n------------- AFTER SORT STUDENT BY NAME -------------");
             P12.Students.Sort(new NameStudentComparer());  // используем класс 'сравнитель'
 
             // использование foreach для перебора группы студентов
-            foreach (Student stud in P12) Console.WriteLine(stud);
+            foreach (Student stud in P12) Console.WriteLine(stud);*/
 
             // сортируем студентов группы по средней оценки за ДЗ
-            Console.WriteLine("\n\n------------- AFTER SORT STUDENT BY AVERAGE GRADE HW -------------");
+            /*Console.WriteLine("\n\n------------- AFTER SORT STUDENT BY AVERAGE GRADE HW -------------");
             P12.Students.Sort(new GradeHWStudentComparer());  // используем класс 'сравнитель'
 
             // использование foreach для перебора группы студентов
-            foreach (Student stud in P12) Console.WriteLine(stud);
+            foreach (Student stud in P12) Console.WriteLine(stud);*/
 
 
             /*Console.WriteLine("\n==============================\n\n");

@@ -89,9 +89,9 @@ namespace HW_ClassStudent
 
         public void AddGradeExam(int grade)
         {
-            if (!CheckCorrect.CheckDigit(grade, 1, 100))
+            if (!CheckCorrect.CheckDigit(grade, 1, 12))
             {
-                throw new Exception("Grade for exam must be from 1 to 100!");
+                throw new Exception("Grade for exam must be from 1 to 12!");
             }
             gradeExam.Add(grade);
         }
@@ -160,6 +160,11 @@ namespace HW_ClassStudent
             foreach (int grade in gradeExam) sb.Append($"{grade} - ");
 
             sb.Append($"\nAverage grade of HW: {AverageGradeHW()}");
+            sb.Append($"\nAverage grade of CW: {AverageGradeCW()}");
+            sb.Append($"\nAverage grade of Exam: {AverageGradeExam()}");
+
+            float averageGrade = (AverageGradeCW() + AverageGradeHW() + AverageGradeExam()) / 3;
+            sb.Append($"\nAverage grade of HW, CW, Exam: {averageGrade}");
 
             return sb.ToString();
         }

@@ -49,6 +49,7 @@
   <ItemGroup>
     <Compile Include="Address.cs" />
     <Compile Include="Aspirant.cs" />
+    <Compile Include="Certificate.cs" />
     <Compile Include="CheckCorrect.cs" />
     <Compile Include="Group.cs" />
     <Compile Include="Person.cs" />
