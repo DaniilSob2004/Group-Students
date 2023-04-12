@@ -13,7 +13,7 @@ namespace HW_ClassStudent
         public static void PrintCertificate(Student stud)
         {
             // средняя оценка по Классной работе, ДЗ и Экзаменам
-            float averageGrade = (stud.AverageGradeCW() + stud.AverageGradeHW() + stud.AverageGradeExam()) / 3;
+            float averageGrade = stud.AverageAllGrades();
 
             Console.WriteLine($"\n\t\tCertificate");
             Console.WriteLine($"Name: {stud.Name}");

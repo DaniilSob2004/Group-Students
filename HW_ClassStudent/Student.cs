@@ -25,6 +25,9 @@ namespace HW_ClassStudent
         public Student(string name, string surname) : 
             this(name, surname, new DateTime(), new Address()) { }
 
+        public Student(string name, string surname, DateTime birthDate) :
+            this(name, surname, birthDate, new Address()) { }
+
         public Student(string name, string surname, DateTime birthDate, Address address, string phoneNumber = "") :
             base(name, surname, birthDate, address, phoneNumber)
         {
@@ -124,6 +127,11 @@ namespace HW_ClassStudent
                 result += i;
             }
             return result / gradeExam.Count;
+        }
+
+        public float AverageAllGrades()
+        {
+            return (AverageGradeCW() + AverageGradeHW() + AverageGradeExam()) / 3;
         }
 
 

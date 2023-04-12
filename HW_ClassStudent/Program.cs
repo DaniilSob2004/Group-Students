@@ -11,36 +11,55 @@ namespace HW_ClassStudent
 {
     public class Program
     {
-        static void Main()
+        public static void GenStudentsGrades(List<Student> students)
         {
-            // использование сортировки студентов
             Random r = new Random();
 
+            // заполняем студентов оценками за дз, классную работу и экзамен
+            foreach (Student student in students)
+            {
+                for (int i = 0; i < 5; i++) student.AddGradeHW(r.Next(1, 12));
+                for (int i = 0; i < 5; i++) student.AddGradeCW(r.Next(3, 12));
+                for (int i = 0; i < 5; i++) student.AddGradeExam(r.Next(5, 12));
+            }
+        }
+
+        static void Main()
+        {
             // создаём массив из 5 студентов
             List<Student> students = new List<Student>();
-            students.Add(new Student("Daniil", "Soboliev"));
-            students.Add(new Student("Andrey", "Soboliev"));
-            students.Add(new Student("Alex", "Zahoruiko"));
-            students.Add(new Student("Anna", "Maliarova"));
-            students.Add(new Student("Bob", "Tompson"));
+            students.Add(new Student("Daniil", "Soboliev", new DateTime(2004, 3, 25)));
+            students.Add(new Student("Andrey", "Soboliev", new DateTime(2006, 5, 4)));
+            students.Add(new Student("Alex", "Zahoruiko", new DateTime(2007, 10, 27)));
+            students.Add(new Student("Anna", "Maliarova", new DateTime(2003, 7, 15)));
+            students.Add(new Student("Bob", "Tompson", new DateTime(2007, 9, 1)));
+            students.Add(new Student("Tom", "Anderson", new DateTime(2008, 11, 3)));
 
             // создаём группу и в конструктор передаём список студентов
             Group P12 = new Group(students);
 
-            // заполняем студентов оценками за дз
-            foreach (Student student in students)
-            {
-                for (int i = 0; i < 5; i++) student.AddGradeHW(r.Next(1, 12));
-                for (int i = 0; i < 5; i++) student.AddGradeCW(r.Next(5, 12));
-                for (int i = 0; i < 5; i++) student.AddGradeExam(r.Next(7, 12));
-            }
+            // заполняем студентов оценками
+            GenStudentsGrades(students);
 
             // использование foreach для перебора группы студентов
             foreach (Student stud in P12) Console.WriteLine(stud);
 
+            Console.WriteLine("\n\n------------- AFTER SORT GROUP STUDENTS BY AVERAGE ALL GRADES -------------");
+            Sort.BubbleSort(P12.Students, StudentsComparer.StudentAverageAllGradesComparer);
+            foreach (Student stud in P12) Console.WriteLine(stud);
+
+            Console.WriteLine("\n\n------------- AFTER SORT GROUP STUDENTS BY SURNAME -------------");
+            Sort.SelectionSort(P12.Students, StudentsComparer.StudentSurnameComparer);
+            foreach (Student stud in P12) Console.WriteLine(stud);
+
+            Console.WriteLine("\n\n------------- AFTER SORT GROUP STUDENTS BY AGE -------------");
+            Sort.InsertionSort(P12.Students, StudentsComparer.StudentAgeComparer);
+            foreach (Student stud in P12) Console.WriteLine(stud);
+
+
             // печатаем сиртификаты студентов
-            Console.WriteLine("\n--------------- Certificates ---------------");
-            foreach (Student stud in P12) Certificate.PrintCertificate(stud);
+            //Console.WriteLine("\n--------------- Certificates ---------------");
+            //foreach (Student stud in P12) Certificate.PrintCertificate(stud);
 
             // сортируем студентов группы по имени
             /*Console.WriteLine("\n\n------------- AFTER SORT STUDENT BY NAME -------------");
