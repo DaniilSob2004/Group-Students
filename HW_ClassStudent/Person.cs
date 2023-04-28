@@ -9,6 +9,7 @@ using CorrectInput;
 
 namespace HW_ClassStudent
 {
+    [Serializable]
     public class Person
     {
         private string name;

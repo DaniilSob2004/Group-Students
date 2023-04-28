@@ -8,6 +8,7 @@ using System.Globalization;
 
 namespace HW_Address
 {
+    [Serializable]
     public class Address
     {
         private string country;

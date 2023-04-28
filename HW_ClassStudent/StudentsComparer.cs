@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace HW_ClassStudent
 {
+    // класс, для сравнения объектов студентов
     public static class StudentsComparer
     {
         private static void CheckStudentObj(object objLeft, object objRight)

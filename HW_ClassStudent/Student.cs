@@ -9,6 +9,7 @@ using CorrectInput;
 
 namespace HW_ClassStudent
 {
+    [Serializable]
     public class Student : Person, IComparable
     {
         private int id;

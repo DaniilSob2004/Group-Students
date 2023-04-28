@@ -41,8 +41,23 @@ namespace HW_ClassStudent
             // заполняем студентов оценками
             GenStudentsGrades(students);
 
+
+            // ------------------- ЗАПИСЬ СТУДЕНТОВ В ФАЙЛ -------------------
+            MyFile.WriteFile<List<Student>>(@"E:\!!!Даня - папка\ListStudents.txt", students);
+
+            // считыаваем из файла
+            List<Student> studentsFromFile = MyFile.ReadFile<List<Student>>(@"E:\!!!Даня - папка\ListStudents.txt");
+
+            // выводим каждого студента
+            foreach (Student stud in studentsFromFile) Console.WriteLine(stud);
+
+
+
+            #region Тестирование
+            Console.WriteLine("==============================\n\n");
+            // -------------------------------------
             // использование foreach для перебора группы студентов
-            foreach (Student stud in P12) Console.WriteLine(stud);
+            /*foreach (Student stud in P12) Console.WriteLine(stud);
 
             Console.WriteLine("\n\n------------- AFTER SORT GROUP STUDENTS BY AVERAGE ALL GRADES -------------");
             Sort.BubbleSort(P12.Students, StudentsComparer.StudentAverageAllGradesComparer);
@@ -54,7 +69,7 @@ namespace HW_ClassStudent
 
             Console.WriteLine("\n\n------------- AFTER SORT GROUP STUDENTS BY AGE -------------");
             Sort.InsertionSort(P12.Students, StudentsComparer.StudentAgeComparer);
-            foreach (Student stud in P12) Console.WriteLine(stud);
+            foreach (Student stud in P12) Console.WriteLine(stud);*/
 
 
             // печатаем сиртификаты студентов
@@ -74,6 +89,7 @@ namespace HW_ClassStudent
 
             // использование foreach для перебора группы студентов
             foreach (Student stud in P12) Console.WriteLine(stud);*/
+
 
 
             /*Console.WriteLine("\n==============================\n\n");
@@ -269,6 +285,7 @@ namespace HW_ClassStudent
                 Console.WriteLine(er.Message);
             }
             Console.WriteLine();*/
+            #endregion
         }
     }
 }

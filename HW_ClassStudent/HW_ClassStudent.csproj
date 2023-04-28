@@ -52,6 +52,7 @@
     <Compile Include="Certificate.cs" />
     <Compile Include="CheckCorrect.cs" />
     <Compile Include="Group.cs" />
+    <Compile Include="MyFile.cs" />
     <Compile Include="Person.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
